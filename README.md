@@ -1,2 +1,0 @@
-# microservice-patterns
-Microservice Patterns
