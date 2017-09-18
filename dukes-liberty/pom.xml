@@ -31,6 +31,13 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.microprofile.fault-tolerance</groupId>
+            <artifactId>microprofile-fault-tolerance-api</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
         
         <dependency>
             <groupId>junit</groupId>
