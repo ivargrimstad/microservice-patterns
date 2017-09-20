@@ -4,5 +4,5 @@ snoopee:
    serviceRoot: snoopee-duke/api
    
 #   snoopeeService: localhost:8080/snoopee-service/
-   snoopeeService: 192.168.99.100:8081/snoopee-service/
+   snoopeeService: 10.156.47.116:8081/snoopee-service/
   
