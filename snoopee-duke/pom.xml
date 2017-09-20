@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>eu.agilejava</groupId>
+    <artifactId>snoopee-duke</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>SnoopEE Duke</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <netbeans.hint.license>mit</netbeans.hint.license>
+        <version.docker-maven-plugin>0.22.1</version.docker-maven-plugin>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+      
+        <dependency>
+            <groupId>eu.agilejava</groupId>
+            <artifactId>snoopee</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+   
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${version.docker-maven-plugin}</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <alias>wildfly</alias>
+                            <name>ivargrimstad/${project.artifactId}</name>
+                            <build>
+                                <maintainer>Ivar Grimstad (ivar.grimstad@gmail.com)</maintainer>
+                                <from>jboss/wildfly:10.1.0.Final</from>
+                                <assembly>
+                                    <user>jboss:jboss:jboss</user>
+                                    <basedir>/opt/jboss/wildfly/standalone</basedir>
+                                    <inline>
+                                        <files>
+                                            <file>
+                                                <source>${basedir}/target/${project.build.finalName}.war</source>
+                                                <outputDirectory>deployments</outputDirectory>
+                                            </file>
+                                            <file>
+                                                <source>${basedir}/src/main/wildfly/standalone-snoopee.xml</source>
+                                                <outputDirectory>configuration</outputDirectory>
+                                            </file>
+                                        </files>
+                                    </inline>                                   
+                                </assembly> 
+                                <entryPoint>
+                                    <exec>
+                                        <arg>/opt/jboss/wildfly/bin/standalone.sh</arg>
+                                        <arg>-c</arg>
+                                        <arg>standalone-snoopee.xml</arg>
+                                        <arg>-b</arg>
+                                        <arg>0.0.0.0</arg>
+                                    </exec>
+                                </entryPoint>                           
+                            </build>
+                            <run>
+                                <env>
+                                    <snoopee-duke.host>http://localhost</snoopee-duke.host>
+                                    <snoopee-duke.port>8091</snoopee-duke.port>
+                                    <snoopee-duke.serviceRoot>snoopee-hello-service/api</snoopee-duke.serviceRoot>
+                                    <snoopee-duke.snoopeeService>192.168.1.186:8081/snoopee-service/</snoopee-duke.snoopeeService>            
+                                </env>
+                                <ports>
+                                    <port>8091:8080</port>
+                                </ports>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>          
+        </plugins>
+    </build>
+   
+</project>
