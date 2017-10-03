@@ -31,6 +31,11 @@
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
 
+        <dependency>
+            <groupId>eu.agilejava</groupId>
+            <artifactId>snoopee-config-client</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
    
     <build>
@@ -78,7 +83,7 @@
                                     <snoopee-duke.host>http://localhost</snoopee-duke.host>
                                     <snoopee-duke.port>8091</snoopee-duke.port>
                                     <snoopee-duke.serviceRoot>snoopee-hello-service/api</snoopee-duke.serviceRoot>
-                                    <snoopee-duke.snoopeeService>192.168.1.186:8081/snoopee-service/</snoopee-duke.snoopeeService>            
+                                    <snoopee-duke.snoopeeService>10.156.47.116:8081/snoopee-service/</snoopee-duke.snoopeeService>            
                                 </env>
                                 <ports>
                                     <port>8091:8080</port>

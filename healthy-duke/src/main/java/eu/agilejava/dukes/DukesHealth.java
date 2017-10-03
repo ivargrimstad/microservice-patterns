@@ -27,6 +27,9 @@ public class DukesHealth implements HealthCheck {
     @Produces(APPLICATION_JSON)
     @Override
     public HealthCheckResponse call() {
-        return HealthCheckResponse.named("successful-check").up().build();
+        return HealthCheckResponse.named("successful-check")
+                .up()
+                .withData("Duke", "Rocks")
+                .build();
     }
 }

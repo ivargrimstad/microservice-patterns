@@ -23,6 +23,8 @@
  */
 package eu.agilejava.snoopee;
 
+import eu.agilejava.snoopee.config.SnoopEEConfig;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -33,9 +35,13 @@ import javax.ws.rs.core.Response;
  */
 @Path("hello")
 public class HelloResource {
-   
-   @GET
-   public Response greet() {
-      return Response.ok("Hello").build();
-   }
+
+    @Inject
+    @SnoopEEConfig(key = "message", defaultValue = "doh")
+    private String message;
+
+    @GET
+    public Response greet() {
+        return Response.ok("Hello " + message).build();
+    }
 }
