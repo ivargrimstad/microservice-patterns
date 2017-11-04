@@ -42,6 +42,6 @@ public class HelloResource {
 
     @GET
     public Response greet() {
-        return Response.ok("Hello " + place + "! ...from WildFly Swarm").build();
+        return Response.ok("Hello " + place + "! ...from MicroProfile 1.2!").build();
     }
 }

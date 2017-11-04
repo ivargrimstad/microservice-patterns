@@ -19,12 +19,12 @@ import org.eclipse.microprofile.health.HealthCheckResponse;
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
 @Health
-@Path("health")
+//@Path("health")
 @ApplicationScoped
 public class DukesHealth implements HealthCheck {
 
-    @GET
-    @Produces(APPLICATION_JSON)
+//    @GET
+//    @Produces(APPLICATION_JSON)
     @Override
     public HealthCheckResponse call() {
         return HealthCheckResponse.named("successful-check")

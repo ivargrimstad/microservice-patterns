@@ -36,6 +36,6 @@ public class RootResource {
    
    @GET
    public Response info() {
-      return Response.ok("Welcome to the WildFly Swarm Micro Service!").build();
+      return Response.ok("Welcome to the MicroProfile 1.2 Micro Service!").build();
    }  
 }

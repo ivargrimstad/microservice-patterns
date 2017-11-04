@@ -9,169 +9,116 @@
   
     <name>Healthy Duke</name>  
   
-    <properties> 
-        <version.wildfly.swarm>2017.9.4</version.wildfly.swarm>  
-        <maven.compiler.source>1.8</maven.compiler.source>  
-        <maven.compiler.target>1.8</maven.compiler.target>  
-        <failOnMissingWebXml>false</failOnMissingWebXml>  
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-        <version.docker-maven-plugin>0.22.1</version.docker-maven-plugin>
-    </properties>  
-  
-    <dependencyManagement> 
-        <dependencies> 
-            <dependency> 
-                <groupId>org.wildfly.swarm</groupId>  
-                <artifactId>bom-all</artifactId>  
-                <version>${version.wildfly.swarm}</version>  
-                <scope>import</scope>  
-                <type>pom</type> 
-            </dependency> 
-        </dependencies> 
-    </dependencyManagement>  
-  
-    <dependencies> 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
-        <!-- 1. Bump the MP version to 1.1 -->
+        <app.name>healthyduke</app.name>
+        <testServerHttpPort>9080</testServerHttpPort>
+        <testServerHttpsPort>9443</testServerHttpsPort>
+        <warContext>${app.name}</warContext>
+        <package.file>${project.build.directory}/${app.name}.zip</package.file>
+        <packaging.type>usr</packaging.type>
+    </properties>
+
+    <dependencies>
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
-            <artifactId>microprofile-bom</artifactId>
-            <version>1.1.0</version>
+            <artifactId>microprofile</artifactId>
+            <version>1.2</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.microprofile.health</groupId>
-            <artifactId>microprofile-health-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <!-- WildFly Swarm Fractions -->  
-        <dependency> 
-            <groupId>org.wildfly.swarm</groupId>  
-            <artifactId>microprofile</artifactId> 
-        </dependency>  
-        <dependency> 
-            <groupId>org.wildfly.swarm</groupId>  
-            <artifactId>microprofile-config</artifactId> 
-            <version>1.0.1</version>
-        </dependency>  
-        <dependency>
-            <groupId>org.wildfly.swarm</groupId>
-            <artifactId>health-api</artifactId>
-            <version>2017.9.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies> 
+    </dependencies>
 
-    <build> 
-        <finalName>healthy-duke</finalName>  
-        <plugins> 
-            <plugin> 
-                <groupId>org.wildfly.swarm</groupId>  
-                <artifactId>wildfly-swarm-plugin</artifactId>  
-                <version>${version.wildfly.swarm}</version> 
-                <executions> 
-                    <execution> 
-                        <goals> 
-                            <goal>package</goal> 
-                        </goals> 
-                    </execution> 
-                </executions> 
-            </plugin>  
-        </plugins> 
-    </build>  
-    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <packagingExcludes>pom.xml</packagingExcludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>copy-app</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/dropins</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>${project.artifactId}-${project.version}.war</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <!-- Enable liberty-maven plugin -->
+            <plugin>
+                <groupId>net.wasdev.wlp.maven.plugins</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
+                <version>2.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <install>
+                        <type>webProfile7</type>
+                        <version>2017.+</version>
+                    </install>
+                    <configFile>${basedir}/src/main/liberty/config/server.xml</configFile>
+                    <serverEnv>${basedir}/src/main/liberty/config/server.env</serverEnv>
+                    <jvmOptionsFile>${basedir}/src/main/liberty/config/jvm.options</jvmOptionsFile>
+                    <packageFile>${package.file}</packageFile>
+                    <include>${packaging.type}</include>
+                    <bootstrapProperties>
+                        <default.http.port>${testServerHttpPort}</default.http.port>
+                        <default.https.port>${testServerHttpsPort}</default.https.port>
+                    </bootstrapProperties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-liberty</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>install-server</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>package-app</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>package-server</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
         <profile>
-            <id>wildfly</id>
-            <dependencies>
-                <dependency>
-                    <groupId>org.eclipse.microprofile.config</groupId>
-                    <artifactId>microprofile-config-api</artifactId>
-                    <version>1.1</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.apache.geronimo.config</groupId>
-                    <artifactId>geronimo-config-impl</artifactId>
-                    <version>1.1-SNAPSHOT</version>
-                </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>io.fabric8</groupId>
-                        <artifactId>docker-maven-plugin</artifactId>
-                        <version>${version.docker-maven-plugin}</version>
-                        <configuration>
-                            <images>
-                                <image>
-                                    <alias>wildfly</alias>
-                                    <name>ivargrimstad/${project.artifactId}:wildfly</name>
-                                    <build>
-                                        <maintainer>Ivar Grimstad (ivar.grimstad@gmail.com)</maintainer>
-                                        <from>jboss/wildfly:10.1.0.Final</from>
-                                        <assembly>
-                                            <basedir>/opt/jboss/wildfly/standalone/deployments/</basedir>
-                                            <descriptorRef>artifact</descriptorRef>
-                                        </assembly>
-                                    </build>
-                                    <run>
-                                        <ports>
-                                            <port>8083:8080</port>
-                                        </ports>
-                                    </run>
-                                </image>
-                            </images>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        
-        <profile>
-            <id>swarm</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>io.fabric8</groupId>
-                        <artifactId>docker-maven-plugin</artifactId>
-                        <version>${version.docker-maven-plugin}</version>
-                        <configuration>
-                            <images>
-                                <image>
-                                    <alias>wildfly</alias>
-                                    <name>ivargrimstad/${project.artifactId}:swarm</name>
-                                    <build>
-                                        <maintainer>Ivar Grimstad (ivar.grimstad@gmail.com)</maintainer>
-                                        <from>openjdk:8-jre-slim</from>
-                                        <ports>
-                                            <port>8080</port>
-                                        </ports>
-                                        <assembly>
-                                            <basedir>/</basedir>
-                                            <inline>
-                                                <files>
-                                                    <file>
-                                                        <source>${project.build.directory}/${project.artifactId}-swarm.jar</source>
-                                                        <outputDirectory>/opt</outputDirectory>
-                                                    </file>
-                                                </files>
-                                            </inline>
-                                        </assembly>
-                                        <entryPoint>
-                                            <shell>java -jar /opt/${project.artifactId}-swarm.jar -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true</shell>
-                                        </entryPoint>
-                                    </build>    
-                                    <run>
-                                        <ports>
-                                            <port>8083:8080</port>
-                                        </ports>
-                                    </run>
-                                </image>
-                            </images>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
+            <id>runnable</id>
+            <properties>
+                <package.file>${project.build.directory}/${app.name}.jar</package.file>
+                <packaging.type>runnable</packaging.type>
+            </properties>
         </profile>
     </profiles>
     
