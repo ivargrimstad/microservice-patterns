@@ -10,5 +10,10 @@
     <quickStartSecurity userName="duke" userPassword="duke"/>
     <keyStore id="defaultKeyStore" password="Liberty"/>
 
+    <mpJwt 
+     jwksUri="https://example.com/api/jwk"
+     issuer="https://example.com/api/v1"
+     audiences="dukesService">
+</mpJwt>
 
 </server>
