@@ -37,7 +37,7 @@ import org.eclipse.microprofile.faulttolerance.Timeout;
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Path("circuit-hello")
+@Path("hello")
 @ApplicationScoped
 @CircuitBreaker(delay = 1, delayUnit = ChronoUnit.SECONDS, requestVolumeThreshold = 3, failureRatio = 1.0)
 @Timeout(value = 3, unit = ChronoUnit.SECONDS)
