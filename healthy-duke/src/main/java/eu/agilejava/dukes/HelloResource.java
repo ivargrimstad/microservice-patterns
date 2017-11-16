@@ -28,6 +28,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 /**
  *
@@ -40,6 +41,7 @@ public class HelloResource {
     @ConfigProperty(name = "place", defaultValue = "World")
     private String place;
 
+    @Timed
     @GET
     public Response greet() {
         return Response.ok("Hello " + place + "! ...from MicroProfile 1.2!").build();
