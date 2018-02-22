@@ -39,14 +39,14 @@ import org.eclipse.microprofile.faulttolerance.Timeout;
  */
 @Path("hello")
 @ApplicationScoped
-@CircuitBreaker(delay = 1, delayUnit = ChronoUnit.SECONDS, requestVolumeThreshold = 3, failureRatio = 1.0)
+@CircuitBreaker(delay = 10, delayUnit = ChronoUnit.SECONDS, requestVolumeThreshold = 3, failureRatio = 1.0)
 @Timeout(value = 3, unit = ChronoUnit.SECONDS)
 public class CircuitHelloResource {
 
     private AtomicInteger counter = new AtomicInteger();
 
     @GET
-    @Fallback(HelloFallbackHandler.class)
+//    @Fallback(HelloFallbackHandler.class)
     public Response greet() {
 
         int count = counter.incrementAndGet();

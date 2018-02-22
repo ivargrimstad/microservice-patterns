@@ -79,7 +79,7 @@
                 <configuration>
                     <install>
                         <type>webProfile7</type>
-                        <version>2017.+</version>
+                        <version>2018.+</version>
                     </install>
                     <configFile>${basedir}/src/main/liberty/config/server.xml</configFile>
                     <serverEnv>${basedir}/src/main/liberty/config/server.env</serverEnv>
