@@ -38,7 +38,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.2.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <packagingExcludes>pom.xml</packagingExcludes>
@@ -79,7 +79,7 @@
                 <configuration>
                     <install>
                         <type>webProfile7</type>
-                        <version>2018.+</version>
+                        <version>2018.3.0_0</version>
                     </install>
                     <configFile>${basedir}/src/main/liberty/config/server.xml</configFile>
                     <serverEnv>${basedir}/src/main/liberty/config/server.env</serverEnv>
