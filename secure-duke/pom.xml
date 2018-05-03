@@ -117,7 +117,7 @@
                         <https.port>6061</https.port>
                         <backend.hostname>localhost</backend.hostname>
                         <liberty.backend.service.hostname>localhost</liberty.backend.service.hostname>
-                        <liberty.backend.service.ssl.port>5051</liberty.backend.service.ssl.port>
+                        <liberty.backend.service.ssl.port>5061</liberty.backend.service.ssl.port>
                         <jwt.issuer>http://openliberty.io</jwt.issuer>
                     </bootstrapProperties>
                     <packageFile>${project.build.directory}/${project.build.finalName}.jar</packageFile>
