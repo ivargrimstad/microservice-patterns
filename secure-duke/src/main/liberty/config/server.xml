@@ -1,19 +1,43 @@
 <server description="Sample Liberty server">
 
     <featureManager>
-        <feature>microprofile-1.2</feature>
+        <feature>microprofile-1.3</feature>
     </featureManager>
 
-    <httpEndpoint httpPort="9080" httpsPort="9443"
-                  id="defaultHttpEndpoint" host="*" />
+    <!--<httpEndpoint httpPort="9080" httpsPort="9443"-->
+                  <!--id="defaultHttpEndpoint" host="*" />-->
 
-    <quickStartSecurity userName="duke" userPassword="duke"/>
-    <keyStore id="defaultKeyStore" password="Liberty"/>
+    <!--<quickStartSecurity userName="duke" userPassword="duke"/>-->
 
-    <mpJwt 
-     jwksUri="https://example.com/api/jwk"
-     issuer="https://example.com/api/v1"
-     audiences="dukesService">
-</mpJwt>
+    <!--<keyStore id="defaultKeyStore" password="Liberty"/>-->
+
+    <basicRegistry id="basic" realm="WebRealm">
+        <user name="bob" password="{xor}PTA9Lyg7" />  <!-- bobpwd -->
+        <user name="alice" password="{xor}PjM2PDovKDs=" />  <!-- alicepwd -->
+        <user name="carl" password="{xor}PD4tMy8oOw==" />   <!-- carlpwd -->
+
+        <group name="myAdmins">
+            <member name="bob" />
+        </group>
+
+        <group name="myUsers">
+            <member name="bob" />
+            <member name="alice" />
+            <member name="carl" />
+        </group>
+    </basicRegistry>
+
+    <!-- This is the keystore that will be used by SSL and by JWT.
+      The keystore is built using the maven keytool plugin -->
+    <keyStore id="defaultKeyStore" location="keystore.jceks" type="JCEKS" password="secret" />
+
+    <!-- The HTTP ports that the application will use. -->
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="${http.port}" httpsPort="${https.port}"/>
+
+    <!-- The application containing the user and login endpoints. -->
+    <!--<webApplication location="${app.name}" contextRoot="/" />-->
+
+    <!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped bean for inspection. -->
+    <mpJwt id="jwtUserConsumer" keyName="default" audiences="simpleapp" issuer="${jwt.issuer}"/>
 
 </server>
