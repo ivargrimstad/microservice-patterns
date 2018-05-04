@@ -27,11 +27,6 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.openliberty.guides</groupId>
-            <artifactId>resources</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -59,8 +54,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/dropins
-                            </outputDirectory>
+                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/dropins</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.build.directory}</directory>
@@ -71,31 +65,22 @@
                             </resources>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <!-- Copy the keystore that Liberty will use -->
                     <execution>
-                        <id>copy-keystore-to-liberty</id>
+                        <id>copy-keystore</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifact>
-                                    <groupId>io.openliberty.guides</groupId>
-                                    <artifactId>resources</artifactId>
-                                    <version>0.0.1-SNAPSHOT</version>
-                                    <type>jar</type>
-                                    <overWrite>false</overWrite>
-                                    <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/resources/security</outputDirectory>
-                                    <includes>keystore.jceks</includes>
-                                </artifact>
-                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/resources/security</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/liberty/config</directory>
+                                    <includes>
+                                        <include>keystore.jceks</include>
+                                    </includes>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
@@ -116,8 +101,6 @@
                         <http.port>6060</http.port>
                         <https.port>6061</https.port>
                         <backend.hostname>localhost</backend.hostname>
-                        <liberty.backend.service.hostname>localhost</liberty.backend.service.hostname>
-                        <liberty.backend.service.ssl.port>5061</liberty.backend.service.ssl.port>
                         <jwt.issuer>http://openliberty.io</jwt.issuer>
                     </bootstrapProperties>
                     <packageFile>${project.build.directory}/${project.build.finalName}.jar</packageFile>
