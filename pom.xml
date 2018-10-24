@@ -10,7 +10,7 @@
 
     <modules>
         <module>configured-duke</module>
-        <module>discovered-duke</module>
+        <module>measured-duke</module>
         <module>healthy-duke</module>
         <module>secure-duke</module>
         <module>snoopee-duke</module>
