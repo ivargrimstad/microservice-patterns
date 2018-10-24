@@ -54,7 +54,9 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/SecureDukeServer/dropins</outputDirectory>
+                            <outputDirectory>
+                                ${project.build.directory}/liberty/wlp/usr/servers/SecureDukeServer/dropins
+                            </outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.build.directory}</directory>
@@ -72,7 +74,9 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/SecureDukeServer/resources/security</outputDirectory>
+                            <outputDirectory>
+                                ${project.build.directory}/liberty/wlp/usr/servers/SecureDukeServer/resources/security
+                            </outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/liberty/config</directory>
