@@ -40,8 +40,9 @@ public class HelloResource {
     @ConfigProperty(name = "place", defaultValue = "World")
     private String place;
 
+
     @GET
     public Response greet() {
-        return Response.ok("Hello " + place + "! ...from WildFly Swarm").build();
+        return Response.ok("Hello " + place + "!").build();
     }
 }

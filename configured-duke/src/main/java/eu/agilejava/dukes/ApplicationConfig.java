@@ -23,23 +23,12 @@
  */
 package eu.agilejava.dukes;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 /**
- *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@ApplicationPath("api")
+@ApplicationPath("")
 public class ApplicationConfig extends Application {
-
-   @Override
-   public Set<Class<?>> getClasses() {
-      Set<Class<?>> resources = new HashSet<>();
-      resources.add(RootResource.class);
-      resources.add(HelloResource.class);
-      return resources;
-   }
 }
