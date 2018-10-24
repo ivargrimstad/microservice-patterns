@@ -15,6 +15,7 @@
         <module>secure-duke</module>
         <module>snoopee-duke</module>
         <module>tolerant-duke</module>
+        <module>packaged-duke</module>
     </modules>    
 
 </project>
