@@ -59,6 +59,6 @@ public class CircuitHelloResource {
             }
         }
 
-        return Response.ok("Hello " + count + "! ...from Liberty").build();
+        return Response.ok("Hello number " + count + "!").build();
     }
 }
