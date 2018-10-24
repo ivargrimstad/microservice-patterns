@@ -23,27 +23,27 @@
  */
 package eu.agilejava.dukes;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.metrics.annotation.Timed;
 
 /**
- *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
 @Path("hello")
+@RequestScoped
 public class HelloResource {
 
     @Inject
     @ConfigProperty(name = "place", defaultValue = "World")
     private String place;
 
-    @Timed
     @GET
     public Response greet() {
-        return Response.ok("Hello " + place + "! ...from MicroProfile 1.2!").build();
+        return Response.ok("Hello " + place + "!").build();
     }
 }

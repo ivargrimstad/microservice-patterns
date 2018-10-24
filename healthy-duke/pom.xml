@@ -1,125 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">  
-    <modelVersion>4.0.0</modelVersion>  
-    <groupId>eu.agilejava</groupId>  
-    <artifactId>healthy-duke</artifactId>  
-    <version>1.0.0-SNAPSHOT</version>  
-    <packaging>war</packaging>  
-  
-    <name>Healthy Duke</name>  
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>eu.agilejava</groupId>
+    <artifactId>healthy-duke</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <name>Healthy Duke</name>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-
-        <app.name>healthyduke</app.name>
-        <testServerHttpPort>9080</testServerHttpPort>
-        <testServerHttpsPort>9443</testServerHttpsPort>
-        <warContext>${app.name}</warContext>
-        <package.file>${project.build.directory}/${app.name}.zip</package.file>
-        <packaging.type>usr</packaging.type>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <version.payara.micro>5.183</version.payara.micro>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
-            <version>1.2</version>
+            <version>1.4</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
+        <finalName>healthy-duke</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <packagingExcludes>pom.xml</packagingExcludes>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.7</version>
+                <groupId>fish.payara.maven.plugins</groupId>
+                <artifactId>payara-micro-maven-plugin</artifactId>
+                <version>1.0.1</version>
                 <executions>
                     <execution>
-                        <id>copy-app</id>
-                        <phase>package</phase>
                         <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/dropins</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}</directory>
-                                    <includes>
-                                        <include>${project.artifactId}-${project.version}.war</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <!-- Enable liberty-maven plugin -->
-            <plugin>
-                <groupId>net.wasdev.wlp.maven.plugins</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>2.0</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <install>
-                        <type>webProfile7</type>
-                        <version>2017.+</version>
-                    </install>
-                    <configFile>${basedir}/src/main/liberty/config/server.xml</configFile>
-                    <serverEnv>${basedir}/src/main/liberty/config/server.env</serverEnv>
-                    <jvmOptionsFile>${basedir}/src/main/liberty/config/jvm.options</jvmOptionsFile>
-                    <packageFile>${package.file}</packageFile>
-                    <include>${packaging.type}</include>
-                    <bootstrapProperties>
-                        <default.http.port>${testServerHttpPort}</default.http.port>
-                        <default.https.port>${testServerHttpsPort}</default.https.port>
-                    </bootstrapProperties>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>install-liberty</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>install-server</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>package-app</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>package-server</goal>
+                            <goal>bundle</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <payaraVersion>${version.payara.micro}</payaraVersion>
+                    <autoDeployEmptyContextRoot>true</autoDeployEmptyContextRoot>
+                </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <profiles>
-        <profile>
-            <id>runnable</id>
-            <properties>
-                <package.file>${project.build.directory}/${app.name}.jar</package.file>
-                <packaging.type>runnable</packaging.type>
-            </properties>
-        </profile>
-    </profiles>
-    
 </project>

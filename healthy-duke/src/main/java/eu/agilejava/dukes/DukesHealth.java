@@ -22,7 +22,7 @@ public class DukesHealth implements HealthCheck {
     public HealthCheckResponse call() {
         return HealthCheckResponse.named("successful-check")
                 .up()
-                .withData("Duke", "Rocks")
+                .withData("Duke", "Rocks!")
                 .build();
     }
 }
