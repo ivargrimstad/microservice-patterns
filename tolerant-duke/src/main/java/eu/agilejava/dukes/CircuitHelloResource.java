@@ -46,7 +46,7 @@ public class CircuitHelloResource {
     private AtomicInteger counter = new AtomicInteger();
 
     @GET
-//    @Fallback(HelloFallbackHandler.class)
+    @Fallback(HelloFallbackHandler.class)
     public Response greet() {
 
         int count = counter.incrementAndGet();

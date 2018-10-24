@@ -1,7 +1,7 @@
 <server description="Sample Liberty server">
 
     <featureManager>
-        <feature>microprofile-1.3</feature>
+        <feature>microprofile-1.4</feature>
     </featureManager>
 
     <!-- This is the keystore that will be used by SSL and by JWT.
@@ -9,9 +9,9 @@
     <keyStore id="defaultKeyStore" location="keystore.jceks" type="JCEKS" password="secret" />
 
     <!-- The HTTP ports that the application will use. -->
-    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="${http.port}" httpsPort="${https.port}"/>
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="6060" httpsPort="6666"/>
 
     <!-- The MP JWT configuration that injects the caller's JWT into a ResourceScoped bean for inspection. -->
-    <mpJwt id="jwtUserConsumer" keyName="default" audiences="simpleapp" issuer="${jwt.issuer}"/>
+    <mpJwt id="jwtUserConsumer" keyName="default" audiences="simpleapp" />
 
 </server>

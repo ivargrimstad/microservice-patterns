@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
-            <version>1.3</version>
+            <version>1.4</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -54,7 +54,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/dropins</outputDirectory>
+                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/SecureDukeServer/dropins</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.build.directory}</directory>
@@ -72,7 +72,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/defaultServer/resources/security</outputDirectory>
+                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/servers/SecureDukeServer/resources/security</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/liberty/config</directory>
@@ -88,22 +88,19 @@
             <plugin>
                 <groupId>net.wasdev.wlp.maven.plugins</groupId>
                 <artifactId>liberty-maven-plugin</artifactId>
-                <version>2.2</version>
-                <extensions>true</extensions>
+                <version>2.6.1</version>
                 <configuration>
-                    <install>
-                        <type>webProfile7</type>
-                        <version>2018.+</version>
-                    </install>
+                    <assemblyArtifact>
+                        <groupId>io.openliberty</groupId>
+                        <artifactId>openliberty-runtime</artifactId>
+                        <version>RELEASE</version>
+                        <type>zip</type>
+                    </assemblyArtifact>
+                    <serverName>SecureDukeServer</serverName>
+                    <stripVersion>true</stripVersion>
+                    <looseApplication>true</looseApplication>
                     <configFile>${basedir}/src/main/liberty/config/server.xml</configFile>
-                    <bootstrapProperties>
-                        <app.name>${project.build.finalName}.war</app.name>
-                        <http.port>6060</http.port>
-                        <https.port>6061</https.port>
-                        <backend.hostname>localhost</backend.hostname>
-                        <jwt.issuer>http://openliberty.io</jwt.issuer>
-                    </bootstrapProperties>
-                    <packageFile>${project.build.directory}/${project.build.finalName}.jar</packageFile>
+                    <packageFile>${project.build.directory}/${project.build.finalName}.zip</packageFile>
                     <include>runnable</include>
                 </configuration>
                 <executions>
@@ -122,39 +119,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>io.fabric8</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${version.docker-maven-plugin}</version>
-                <configuration>
-                    <images>
-                        <image>
-                            <alias>${project.artifactId}-liberty</alias>
-                            <name>ivargrimstad/${project.artifactId}:liberty</name>
-                            <build>
-                                <maintainer>Ivar Grimstad (ivar.grimstad@gmail.com)</maintainer>
-                                <from>websphere-liberty:beta</from>
-                                <assembly>
-                                    <basedir>/opt/ibm/wlp/usr/servers</basedir>
-                                    <inline>
-                                        <files>
-                                            <file>
-                                                <source>${basedir}/target/${project.build.finalName}.war</source>
-                                                <outputDirectory>defaultServer/dropins</outputDirectory>
-                                            </file>
-                                            <file>
-                                                <source>${basedir}/src/main/liberty/config/server.xml</source>
-                                                <outputDirectory>defaultServer</outputDirectory>
-                                            </file>
-                                        </files>
-                                    </inline>
-                                </assembly>
-
-                            </build>
-                        </image>
-                    </images>
-                </configuration>
             </plugin>
         </plugins>
     </build>
