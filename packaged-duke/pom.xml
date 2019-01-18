@@ -17,21 +17,21 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <version.payara.micro>5.183</version.payara.micro>
-        <version.docker-maven-plugin>0.24.0</version.docker-maven-plugin>
+        <version.docker-maven-plugin>0.28.0</version.docker-maven-plugin>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
-            <version>1.4</version>
+            <version>2.0.1</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>healthy-duke</finalName>
+        <finalName>packaged-duke</finalName>
         <plugins>
             <plugin>
                 <groupId>io.fabric8</groupId>
@@ -44,7 +44,7 @@
                             <name>ivargrimstad/${project.artifactId}:payara</name>
                             <build>
                                 <maintainer>Ivar Grimstad (ivar.grimstad@gmail.com)</maintainer>
-                                <from>payara/micro:5.183</from>
+                                <from>payara/micro:5.184</from>
                                 <assembly>
                                     <basedir>/opt/payara/deployments</basedir>
                                     <descriptorRef>artifact</descriptorRef>
