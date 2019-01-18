@@ -16,14 +16,14 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <version.payara.micro>5.183</version.payara.micro>
+        <version.payara.micro>5.184</version.payara.micro>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
-            <version>1.4</version>
+            <version>2.0.1</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
