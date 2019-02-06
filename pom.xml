@@ -16,6 +16,7 @@
         <module>snoopee-duke</module>
         <module>tolerant-duke</module>
         <module>packaged-duke</module>
+        <module>traced-duke</module>
     </modules>    
 
 </project>
