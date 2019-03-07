@@ -9,28 +9,15 @@
     <name>Tolerant Duke</name>
 
     <properties>
-        <version.thorntail>2.3.0.Final</version.thorntail>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.docker-maven-plugin>0.28.0</version.docker-maven-plugin>
+        <version.payara.micro>5.184</version.payara.micro>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.thorntail</groupId>
-                <artifactId>bom-all</artifactId>
-                <version>${version.thorntail}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
-
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
@@ -38,27 +25,26 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>io.thorntail</groupId>
-            <artifactId>microprofile</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
         <finalName>tolerant-duke</finalName>
         <plugins>
             <plugin>
-                <groupId>io.thorntail</groupId>
-                <artifactId>thorntail-maven-plugin</artifactId>
-                <version>${version.thorntail}</version>
+                <groupId>fish.payara.maven.plugins</groupId>
+                <artifactId>payara-micro-maven-plugin</artifactId>
+                <version>1.0.1</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>package</goal>
+                            <goal>bundle</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <payaraVersion>${version.payara.micro}</payaraVersion>
+                    <autoDeployEmptyContextRoot>true</autoDeployEmptyContextRoot>
+                </configuration>
             </plugin>
         </plugins>
     </build>

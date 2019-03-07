@@ -11,21 +11,39 @@
     <name>Healthy Duke</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <version.thorntail>2.3.0.Final</version.thorntail>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <version.payara.micro>5.184</version.payara.micro>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.docker-maven-plugin>0.28.0</version.docker-maven-plugin>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.thorntail</groupId>
+                <artifactId>bom-all</artifactId>
+                <version>${version.thorntail}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
             <artifactId>microprofile</artifactId>
-            <version>2.0.1</version>
+            <version>2.1</version>
             <type>pom</type>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.thorntail</groupId>
+            <artifactId>microprofile</artifactId>
         </dependency>
     </dependencies>
 
@@ -33,20 +51,16 @@
         <finalName>healthy-duke</finalName>
         <plugins>
             <plugin>
-                <groupId>fish.payara.maven.plugins</groupId>
-                <artifactId>payara-micro-maven-plugin</artifactId>
-                <version>1.0.1</version>
+                <groupId>io.thorntail</groupId>
+                <artifactId>thorntail-maven-plugin</artifactId>
+                <version>${version.thorntail}</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>bundle</goal>
+                            <goal>package</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <payaraVersion>${version.payara.micro}</payaraVersion>
-                    <autoDeployEmptyContextRoot>true</autoDeployEmptyContextRoot>
-                </configuration>
             </plugin>
         </plugins>
     </build>
