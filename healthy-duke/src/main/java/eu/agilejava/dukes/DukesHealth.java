@@ -14,7 +14,7 @@ import org.eclipse.microprofile.health.HealthCheckResponse;
  *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-@Health
+//@Health
 @ApplicationScoped
 public class DukesHealth implements HealthCheck {
 
