@@ -1,0 +1,24 @@
+= Generate Key Pair
+Follow these instructions to create a public and private keystore for creating and validating JWT
+tokens.
+
+== Generate private keystore
+
+ keytool -genkey -alias app -keyalg RSA -keystore private.jks -keysize 4096
+ 
+== Export certificate
+
+ keytool -v -export -file private.cer -keystore private.jks -alias app
+
+== Convert certificate
+
+ openssl x509 -inform der -in private.cer -out private.pem
+
+== Generate public keystore with public key
+
+ keytool -import -alias app -file private.cer -keystore public.jks
+
+== Helpful commands
+
+ keytool -list -v -keystore public.jks 
+ cat private.pem
