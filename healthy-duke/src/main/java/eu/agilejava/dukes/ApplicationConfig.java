@@ -27,7 +27,6 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 /**
- *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
 @ApplicationPath("")
