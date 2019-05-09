@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile -t ivargrimstad/packaged-duke .
+# docker build -f src/main/docker/Dockerfile -t ivargrimstad/packaged-duke-native .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 ivargrimstad/packaged-duke
+# docker run -i --rm -p 8080:8080 -name native ivargrimstad/packaged-duke-native
 #
 ###
 FROM registry.fedoraproject.org/fedora-minimal

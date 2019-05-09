@@ -35,7 +35,9 @@ public class HelloWorldEndpoint {
 
         try (Scope childScope = tracer.buildSpan("call birthdayService")
                 .startActive(true)) {
+
             System.out.println(birthdayService.daysToBirthday("1973-01-25"));
+
         }
 
         return Response.ok("Hello " + place + "!").build();

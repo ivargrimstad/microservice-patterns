@@ -23,7 +23,10 @@
  */
 package eu.agilejava.dukes;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.Collections;
@@ -36,6 +39,7 @@ import java.util.Set;
 @ApplicationScoped
 @ApplicationPath("")
 public class ApplicationConfig extends Application {
+
 
     @Override
     public Set<Class<?>> getClasses() {

@@ -44,6 +44,7 @@ public class HelloResource {
     @ConfigProperty(name = "place", defaultValue = "World")
     private String place;
 
+
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response greet() {

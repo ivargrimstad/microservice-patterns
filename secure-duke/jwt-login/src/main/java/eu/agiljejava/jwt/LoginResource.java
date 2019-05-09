@@ -29,7 +29,7 @@ import java.util.Set;
 public class LoginResource {
 
     @POST
-    public Response authenticate(@BeanParam UserCredentials userCredentials) throws Exception {
+    public Response authenticate() throws Exception {
 
         Set<String> roles = new HashSet<>();
         roles.add("senior");
@@ -38,6 +38,16 @@ public class LoginResource {
         return Response.ok(token).build();
     }
 
+    @POST
+    @Path("junior")
+    public Response authenticateJuniou() throws Exception {
+
+        Set<String> roles = new HashSet<>();
+        roles.add("junior");
+        String token = buildJwt("duke", roles);
+
+        return Response.ok(token).build();
+    }
 
     private String buildJwt(String userName, Set<String> roles) throws Exception {
         return JwtBuilder.create("jwtFrontEndBuilder")
