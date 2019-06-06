@@ -11,7 +11,7 @@
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 -name native ivargrimstad/packaged-duke-native
+# docker run -i --rm -p 8082:8080 --name native ivargrimstad/packaged-duke-native
 #
 ###
 FROM registry.fedoraproject.org/fedora-minimal
