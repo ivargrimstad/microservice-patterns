@@ -6,23 +6,24 @@
 package eu.agilejava.dukes;
 
 import javax.enterprise.context.ApplicationScoped;
+
 import org.eclipse.microprofile.health.Health;
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.Readiness;
 
 /**
- *
  * @author Ivar Grimstad (ivar.grimstad@gmail.com)
  */
-//@Health
+@Readiness
 @ApplicationScoped
-public class DukesHealth implements HealthCheck {
+public class DukeReady implements HealthCheck {
 
     @Override
     public HealthCheckResponse call() {
         return HealthCheckResponse.named("successful-check")
                 .up()
-                .withData("Duke", "Rocks!")
+                .withData("Duke", "Ready!")
                 .build();
     }
 }

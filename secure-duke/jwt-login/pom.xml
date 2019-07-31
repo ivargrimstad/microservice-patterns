@@ -106,10 +106,10 @@
             </build>
             <properties>
                 <openliberty.maven.version>2.2</openliberty.maven.version>
-                <httpsPort>8543</httpsPort>
+                <httpsPort>8545</httpsPort>
                 <openliberty.version>RELEASE</openliberty.version>
                 <jwt.issuer>https://agilejava.eu</jwt.issuer>
-                <httpPort>8181</httpPort>
+                <httpPort>8183</httpPort>
             </properties>
         </profile>
     </profiles>
